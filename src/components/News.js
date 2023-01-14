@@ -4,13 +4,13 @@ import { useState } from 'react'
 import Spinner from './Spinner';
 import '../App.css';
 
-export default function News() {
+export default function News(props) {
   const [articles,setArticles]=useState([]);
   const [page,setPage]=useState(1);
   const [loading,setLoading]=useState(false);
 
   const fetchData=async()=>{
-    let url="https://newsapi.org/v2/everything?q=football&apiKey=4e6edafdf0f34830af7a2e61db34f667&page=1&pageSize=18"
+    let url=`https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=4e6edafdf0f34830af7a2e61db34f667&pageSize=18`
     setLoading(true);
     let data= await fetch(url);
 
@@ -27,7 +27,7 @@ export default function News() {
   },[]);
 
   const handlePrevClick=async()=>{
-    let url=`https://newsapi.org/v2/everything?q=football&apiKey=4e6edafdf0f34830af7a2e61db34f667&page=${page-1}&pageSize=18`
+    let url=`https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=4e6edafdf0f34830af7a2e61db34f667&page=${page-1}&pageSize=18`
     setLoading(true);
     let data= await fetch(url);
 
@@ -39,7 +39,7 @@ export default function News() {
    setLoading(false);
   }
   const handleNextClick=async()=>{
-    let url=`https://newsapi.org/v2/everything?q=football&apiKey=4e6edafdf0f34830af7a2e61db34f667&page=${page+1}&pageSize=18`
+    let url=`https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=4e6edafdf0f34830af7a2e61db34f667&page=${page+1}&pageSize=18`
     setLoading(true);
     let data= await fetch(url);
 
@@ -78,3 +78,7 @@ export default function News() {
     </div>
   )
 }
+
+News.defaultProps={
+  category:'general',
+};
